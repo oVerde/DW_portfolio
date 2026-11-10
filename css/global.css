@@ -1,11 +1,13 @@
 * {
     box-sizing: border-box;
+    background-color: var(--black);
 }
 
 body {
     margin: 0;
     font-family: var(--font-body);
     font-weight: 400;
+    color: var(--white);
 }
 
 h1,
@@ -16,4 +18,5 @@ h5,
 h6 {
     font-family: var(--font-display);
     font-weight: 700;
+    color: var(--white);
 }
