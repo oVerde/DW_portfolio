@@ -1,7 +1,8 @@
 .site-footer {
     display: grid;
     gap: 3rem;
-    padding: clamp(3rem, 8vw, 7rem) clamp(1rem, 3vw, 2rem) 2rem;
+    padding-block: clamp(3rem, 8vw, 7rem) 2rem;
+    padding-inline: var(--padding-inline);
     background: var(--black);
     color: var(--white);
 }

@@ -170,6 +170,10 @@ Project content can currently be edited in `index.html`. The planned role of `ad
 
 When that work is implemented, project data should be kept separate from presentation logic wherever possible.
 
+The project image grid is rendered by [`add_projects.js`](./js/add_projects.js). Change `projectImageCount` in that file to control the number of image slots. The value is always corrected to at least one slot, and the CSS places a maximum of three slots per row on desktop.
+
+The projects header includes a responsive filter control. Opening `All projects` reveals one option for each category currently present in the project list. Selecting a category hides the non-matching projects, while the `No. Projetos` value is calculated from the complete project list.
+
 ## Design and technical goals
 
 The project is intended to become:

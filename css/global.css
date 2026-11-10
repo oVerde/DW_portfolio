@@ -7,16 +7,14 @@ body {
     margin: 0;
     font-family: var(--font-body);
     font-weight: 400;
+    cursor: default;
     color: var(--white);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family: var(--font-display);
+.hero-title {
+        font-family: var(--font-display);
     font-weight: 700;
     color: var(--white);
+    padding-inline: var(--padding-inline);
+    font-size: clamp(2.5rem, 5vw, 3rem);
 }

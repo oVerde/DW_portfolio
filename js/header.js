@@ -5,8 +5,8 @@ export function renderHeader(target = document.querySelector('[data-component="h
 
     target.outerHTML = `
         <header class="site-header">
-            <a class="logo logo-desktop">joão verde</a>
-            <a class="logo logo-mobile">jv</a>
+            <a class="logo logo-desktop" href="#home">joão verde</a>
+            <a class="logo logo-mobile" href="#home">jv</a>
             <nav class="nav" aria-label="Main navigation">
                 <ul class="nav-main">
                     <li><a href="#work">work</a></li>

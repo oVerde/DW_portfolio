@@ -9,7 +9,8 @@
     background: var(--white);
     background-color: var(--black);
     font-family: var(--font-body);
-    padding: 0rem clamp(1rem, 2vw, 2rem);
+    padding-inline: var(--padding-inline);
+    padding-block: 0;
     padding-bottom: 0.3rem;
     color: var(--green-highlight);
 }
@@ -23,7 +24,7 @@
     font-family: var(--font-display);
     font-size: clamp(1.5rem, 1vw, 1rem);
     line-height: 1;
-    cursor: default;
+    cursor: pointer;
 }
 
 .logo-mobile {
@@ -144,7 +145,8 @@
         flex-direction: column;
         gap: 1.5rem;
         height: 100vh;
-        padding: 1.5rem clamp(1rem, 3vw, 2rem) 2rem;
+        padding-block: 1.5rem 2rem;
+        padding-inline: 0;
         background: var(--white);
         opacity: 0;
         visibility: hidden;

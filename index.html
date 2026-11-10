@@ -15,25 +15,25 @@
                 I'M JOÃO VERDE AND IM A MULTIMEDIA DESIGNER. MY GOAL IS TO RESOLVE PROBLEMS THAT ONLY DESIGN CAN, AND TO ACHIEVE IT IM AIMING TO CREATE BETTER DESIGNS AND EXPERIMENTING DIFFERENT THINGS EVERYDAY, TAKE A LOOK AT MY WORK!
             </h1>
         </section>
-        <section class="showcase-grid">
-            <article class="grid-item"></article>
-            <article class="grid-item"></article>
-            <article class="grid-item"></article>
-            <article class="grid-item"></article>
-            <article class="grid-item"></article>
-            <article class="grid-item"></article>
-        </section>
         <section class="projects-section">
-            <header class="projects-header">
+         
+
+            <div class="projects-grid" data-project-grid></div>
+
+               <header class="projects-header">
                 <div class="project-stats">
                     <span class="stats-label">No. Projetos</span>
-                    <span class="stats-number">14</span>
+                    <span class="stats-number" data-project-count>0</span>
                 </div>
                 <div class="projects-filter">
-                    <h2>All projects ◇</h2>
+                    <button class="filter-toggle" type="button" aria-expanded="false" aria-controls="project-filters">
+                        <span data-filter-label>All projects</span>
+                        <span data-filter-icon aria-hidden="true">↕</span>
+                    </button>
+                    <div class="filter-options" id="project-filters" aria-hidden="true"></div>
                 </div>
             </header>
-
+            
             <div class="projects-list">
                 <div class="year-group">
                     <h3 class="year-title">2026</h3>

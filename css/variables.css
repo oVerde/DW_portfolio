@@ -7,6 +7,7 @@
     --black: #131713;
     --white-hover: #C1D8B3;
     --white: #FCFDFF;
+    --padding-inline: clamp(1rem, 0.5vw, 0.1rem);
 
     --font-display: "Basteleur Bold", Georgia, serif;
     --font-body: "Satoshi", Arial, sans-serif;
