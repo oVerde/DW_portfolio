@@ -117,7 +117,9 @@ The entry point is loaded as an ES module:
 
 [`footer.js`] follows the same pattern with `renderFooter()`. This makes both components independent from the page markup and easier to update globally.
 
-For example, changing the navigation in `header.js` updates every page that uses the component.
+The footer currently contains the contact section, email, phone, location, portfolio bio and a live local time display for Coimbra. The contact navigation points to the footer through the `#contacts` anchor.
+
+For example, changing the navigation in `header.js` or the contact details in `footer.js` updates every page that uses the component.
 
 ## Running the project locally
 
