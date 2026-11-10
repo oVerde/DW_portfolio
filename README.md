@@ -23,6 +23,9 @@ DW_portfolio/
 ├── README.md
 ├── api/
 │   └── api.js
+├── fonts/
+│   └── satoshi/
+│       └── Satoshi-*.woff2
 ├── css/
 │   ├── animations.css
 │   ├── global.css
@@ -66,15 +69,31 @@ This keeps the page clean and allows the same components to be reused on other p
 
 The currently prepared stylesheets are:
 
-- `variables.css` — shared design tokens such as colours, spacing and typography variables.
-- `global.css` — global resets, base typography and common page rules.
+- `variables.css` — shared colour and typography variables, the Basteleur import and the local Satoshi font-face declarations.
+- `global.css` — global box sizing, base typography and heading rules connected to the shared font variables.
 - `animations.css` — reusable animations and transitions.
 - `intro_anim.css` — animations for the introduction or hero area.
 - `header.css` — styles specific to the header.
 - `footer.css` — styles specific to the footer.
 - `projects.css` — styles for the projects area.
 
-The CSS files are intentionally empty at this stage. They are separated and ready to receive styles without mixing unrelated responsibilities.
+Stylesheets are loaded in order by `head.js`, with `variables.css` loaded first so that the remaining files can use the shared design tokens.
+
+### Typography
+
+The visual system uses two font families:
+
+- **Basteleur Bold** for headings and display typography. It is imported in `css/variables.css` from the provided webfont URL.
+- **Satoshi** for body text and interface elements. Its variable normal and italic font files are stored locally in `fonts/satoshi/`.
+
+The main variables are:
+
+```css
+--font-display: "Basteleur Bold", Georgia, serif;
+--font-body: "Satoshi", Arial, sans-serif;
+```
+
+Use these variables instead of hard-coding font names in component styles.
 
 ### Centralised JavaScript imports
 
@@ -124,13 +143,15 @@ Alternatively, use the **Live Server** extension in VS Code.
 
 ### Adding or changing styles
 
-1. Put shared values in `css/variables.css`.
+1. Put shared colours and typography values in `css/variables.css`.
 2. Put general page rules in `css/global.css`.
 3. Keep header and footer rules in `css/header_footer/`.
 4. Keep project-specific rules in `css/projects.css`.
 5. Add animation rules to `animations.css` or `intro_anim.css`, depending on their scope.
 
 If a new stylesheet is created, add its path to the `stylesheets` array in [`js/head.js`](./js/head.js).
+
+When adding typography, use `var(--font-body)` for interface and body text or `var(--font-display)` for headings and display text. Keep local font files inside `fonts/` and add a corresponding `@font-face` declaration to `css/variables.css`.
 
 ### Updating the header or footer
 
