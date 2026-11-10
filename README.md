@@ -18,7 +18,6 @@ The visual direction is based on a clean editorial layout, with emphasis on typo
 
 ## Current structure
 
-```text
 DW_portfolio/
 ├── index.html
 ├── README.md
@@ -40,7 +39,6 @@ DW_portfolio/
     ├── head.js
     ├── header.js
     └── js_import.js
-```
 
 ## How it works
 
@@ -60,11 +58,11 @@ The header and footer are not written directly into the page. Instead, the HTML 
 <div data-component="footer"></div>
 ```
 
-This keeps the page clean and allows the same components to be reused on other pages later.
+This keeps the page clean and allows the same components to be reused on other pages later, if needed.
 
 ### Centralised CSS loading
 
-[`js/head.js`](./js/head.js) is responsible for adding the project's stylesheets to the document head. This creates one central place where styles can be registered.
+[`js/head.js`] is responsible for adding the project's stylesheets to the document head. This creates one central place where global styles can be registered.
 
 The currently prepared stylesheets are:
 
@@ -80,13 +78,13 @@ The CSS files are intentionally empty at this stage. They are separated and read
 
 ### Centralised JavaScript imports
 
-[`js/js_import.js`](./js/js_import.js) is the main JavaScript entry point. It imports the project's modules in one organised location:
+[`js/js_import.js`] is the main JavaScript entry point. It imports the project's modules in one organised location:
 
-- [`header.js`](./js/header.js) renders the header.
-- [`footer.js`](./js/footer.js) renders the footer.
-- [`filter.js`](./js/filter.js) is reserved for project filtering behaviour.
-- [`add_projects.js`](./js/add_projects.js) is reserved for adding or generating projects.
-- [`api.js`](./api/api.js) is reserved for future API or external data integration.
+- [`header.js`] renders the header.
+- [`footer.js`] renders the footer.
+- [`filter.js`] is reserved for project filtering behaviour.
+- [`add_projects.js`] is reserved for adding or generating projects.
+- [`api.js`] is reserved for future API or external data integration.
 
 The entry point is loaded as an ES module:
 
@@ -96,9 +94,9 @@ The entry point is loaded as an ES module:
 
 ### Header and footer components
 
-[`header.js`](./js/header.js) exports `renderHeader()`. It finds the element marked with `data-component="header"` and replaces it with the complete site header.
+[`header.js`] exports `renderHeader()`. It finds the element marked with `data-component="header"` and replaces it with the complete site header.
 
-[`footer.js`](./js/footer.js) follows the same pattern with `renderFooter()`. This makes both components independent from the page markup and easier to update globally.
+[`footer.js`] follows the same pattern with `renderFooter()`. This makes both components independent from the page markup and easier to update globally.
 
 For example, changing the navigation in `header.js` updates every page that uses the component.
 

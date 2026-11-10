@@ -1,0 +1,29 @@
+@import url("https://db.onlinewebfonts.com/c/2d6dc791ec2390910abaaa9fe0bf10fa?family=Basteleur+Bold");
+
+:root {
+    --green-highlight: #00C760;
+    --white-off: #6A836E;
+    --black-hover: #18211D;
+    --black: #131713;
+    --white-hover: #C1D8B3;
+    --white: #FCFDFF;
+
+    --font-display: "Basteleur Bold", Georgia, serif;
+    --font-body: "Satoshi", Arial, sans-serif;
+}
+
+@font-face {
+    font-family: "Satoshi";
+    src: url("../fonts/satoshi/Satoshi-Variable.woff2") format("woff2");
+    font-weight: 300 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Satoshi";
+    src: url("../fonts/satoshi/Satoshi-VariableItalic.woff2") format("woff2");
+    font-weight: 300 900;
+    font-style: italic;
+    font-display: swap;
+}
