@@ -59,7 +59,12 @@ export function renderProjects(imageCount = projectImageCount) {
             item.dataset.projectName = project.name;
             item.dataset.projectYear = project.year;
             item.dataset.projectCategory = project.category;
-            item.innerHTML = `<span class="project-name">${project.name}</span><span class="project-category">${project.category}</span>`;
+
+            const button = document.createElement('button');
+            button.className = 'project-button';
+            button.type = 'button';
+            button.innerHTML = `<span class="project-name">${project.name}</span><span class="project-category">${project.category}</span>`;
+            item.append(button);
             return item;
         }));
 

@@ -1,0 +1,32 @@
+.custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 50%;
+    background-color: var(--white);
+    mix-blend-mode: difference;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, width 0.25s ease, height 0.25s ease, background-color 0.25s ease;
+    will-change: transform;
+}
+
+.custom-cursor.is-visible {
+    opacity: 1;
+}
+
+.custom-cursor.is-interactive {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 0.2rem solid var(--green-hover);
+    background-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .custom-cursor {
+        transition: none;
+    }
+}

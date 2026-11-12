@@ -4,6 +4,7 @@
     const stylesheets = [
         'css/variables.css',
         'css/global.css',
+        'css/cursor.css',
         'css/animations.css',
         'css/intro_anim.css',
         'css/header_footer/header.css',

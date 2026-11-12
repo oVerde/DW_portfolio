@@ -17,7 +17,8 @@
 
 .expand-icon {
     font-family: var(--font-body);
-    font-size: clamp(1rem, 0.5vw, 0.3rem);
+    font-size: clamp(1rem, 0.4vw, 0.2rem);
+    color: var(--green-hover);
 }
 
 .project-stats {
@@ -38,6 +39,9 @@
 
 .projects-filter {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
 .filter-toggle,
@@ -51,10 +55,18 @@
 
 .filter-toggle {
     display: flex;
+    align-self: flex-start;
     align-items: center;
     gap: 0.75rem;
     padding: 0;
     font-size: clamp(2rem, 5vw, 4rem);
+    cursor: pointer;
+}
+
+.filter-toggle:hover,
+.filter-toggle:focus-visible {
+    color: var(--white-hover);
+    transition: color 0.2s ease;
 }
 
 .filter-toggle [data-filter-label] {
@@ -63,8 +75,15 @@
 }
 
 .filter-toggle [data-filter-icon] {
+    font-family: var(--font-display);
     text-decoration: none;
     text-decoration-line: none;
+}
+
+.filter-toggle .expand-icon {
+    align-self: flex-end;
+    font-family: var(--font-body);
+    padding-bottom: 1rem;
 }
 
 .filter-toggle[aria-expanded="true"] .expand-icon {
@@ -73,6 +92,12 @@
 
 .filter-toggle[aria-expanded="true"] {
     color: var(--green-highlight);
+    transition: color 0.2s ease;
+}
+
+.filter-toggle[aria-expanded="true"]:hover,
+.filter-toggle[aria-expanded="true"]:focus-visible {
+    color: var(--black-hover);
 }
 
 .filter-options {
@@ -104,7 +129,8 @@
 
 .filter-option:hover,
 .filter-option:focus-visible {
-    color: var(--green-highlight);
+    color: var(--white-hover);
+    transition: color 0.2s ease;
 }
 
 .projects-list {
@@ -144,16 +170,39 @@
 }
 
 .project-item {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 2rem;
-    align-items: center;
     max-height: 10rem;
     overflow: hidden;
-    padding-block: 0.5rem;
     opacity: 1;
     transform: translateY(0);
     transition: max-height 0.45s ease, padding 0.45s ease, opacity 0.3s ease, transform 0.45s ease;
+}
+
+.project-button {
+    position: relative;
+    display: grid;
+    grid-template-columns: 60% minmax(0, 1fr);
+    gap: 2rem;
+    align-items: center;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: var(--white);
+    cursor: pointer;
+    padding-block: 0.5rem;
+    text-align: left;
+    font: inherit;
+    appearance: none;
+}
+
+.project-button:hover,
+.project-button:focus-visible {
+    background-color: var(--green-highlight);
+    color: var(--black);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.project-button > * {
+    background-color: transparent;
 }
 
 .project-item.is-filtered {
@@ -172,9 +221,10 @@
 
 .project-category {
     grid-column: 2;
-    margin-right: clamp(1rem, 8vw, 8rem);
+    margin: 0;
     font-family: var(--font-display);
     font-size: clamp(1rem, 1.5vw, 1.25rem);
+    text-align: left;
 }
 
 .projects-grid {
@@ -236,8 +286,8 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .project-item {
-        grid-template-columns: 1fr auto;
+    .project-button {
+        grid-template-columns: 1fr;
         gap: 1rem;
     }
 

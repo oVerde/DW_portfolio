@@ -9,6 +9,7 @@ body {
     font-weight: 400;
     cursor: default;
     color: var(--white);
+    width: 100vw;
 }
 
 .hero-title {
@@ -16,5 +17,5 @@ body {
     font-weight: 700;
     color: var(--white);
     padding-inline: var(--padding-inline);
-    font-size: clamp(2.5rem, 5vw, 3rem);
+    font-size: clamp(1rem, 4vw, 3rem);
 }
