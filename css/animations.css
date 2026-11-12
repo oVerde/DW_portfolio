@@ -1,0 +1,45 @@
+@keyframes page-fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes page-fade-out {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+body {
+    animation: page-fade-in 1s ease-out both;
+}
+
+body::before {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: var(--black);
+    content: "";
+    pointer-events: none;
+    animation: page-fade-out 0.8s ease-out 0.2s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body,
+    body::before {
+        animation: none;
+    }
+
+    body::before {
+        display: none;
+    }
+}

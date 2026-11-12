@@ -1,23 +1,35 @@
-// Add or remove filter names in this list.
-const FILTERS = ['All projects', 'Universitário'];
 const ALL_PROJECTS = 'All projects';
 
 const filterToggle = document.querySelector('.filter-toggle');
 const filterOptions = document.querySelector('.filter-options');
 const filterLabel = document.querySelector('[data-filter-label]');
 const filterIcon = document.querySelector('[data-filter-icon]');
-const projectItems = [...document.querySelectorAll('.project-item')];
 const projectCount = document.querySelector('[data-project-count]');
 
-if (filterToggle && filterOptions && filterLabel && filterIcon && projectCount) {
+export function initProjectFilters() {
+    if (!filterToggle || !filterOptions || !filterLabel || !filterIcon || !projectCount) {
+        return;
+    }
+
+    const projectItems = [...document.querySelectorAll('.project-item')];
+    const projectCards = [...document.querySelectorAll('.project-card')];
+    const yearGroups = [...document.querySelectorAll('.year-group')];
+    const filters = [ALL_PROJECTS, ...new Set(projectItems.map((item) => item.dataset.projectCategory))];
     const updateProjectCount = () => {
-        projectCount.textContent = projectItems.filter((item) => !item.hidden).length;
+        projectCount.textContent = projectItems.filter((item) => !item.classList.contains('is-filtered')).length;
+    };
+
+    const updateYearGroups = () => {
+        yearGroups.forEach((group) => {
+            const hasVisibleProjects = group.querySelector('.project-item:not(.is-filtered)');
+            group.classList.toggle('is-filtered', !hasVisibleProjects);
+        });
     };
 
     updateProjectCount();
 
     filterOptions.replaceChildren(
-        ...FILTERS.map((filter) => {
+        ...filters.map((filter) => {
             const button = document.createElement('button');
             button.type = 'button';
             button.className = 'filter-option';
@@ -37,14 +49,54 @@ if (filterToggle && filterOptions && filterLabel && filterIcon && projectCount) 
         filterOptions.classList.toggle('is-open', isOpen);
     };
 
+    const keepFilterInPlace = (top) => {
+        const start = performance.now();
+        const duration = 500;
+
+        const adjustScroll = (now) => {
+            const currentTop = filterToggle.getBoundingClientRect().top;
+            window.scrollBy(0, currentTop - top);
+
+            if (now - start < duration) {
+                window.requestAnimationFrame(adjustScroll);
+            }
+        };
+
+        window.requestAnimationFrame(adjustScroll);
+    };
+
     const applyFilter = (filter) => {
+        const filterTop = filterToggle.getBoundingClientRect().top;
         activeFilter = filter;
         projectItems.forEach((item) => {
-            const category = item.querySelector('.project-category')?.textContent.trim();
-            item.hidden = filter !== ALL_PROJECTS && category !== filter;
+            const category = item.dataset.projectCategory;
+            const isFiltered = filter !== ALL_PROJECTS && category !== filter;
+            item.hidden = false;
+            item.classList.toggle('is-filtered', isFiltered);
+            if (isFiltered) {
+                window.setTimeout(() => {
+                    if (item.classList.contains('is-filtered')) {
+                        item.hidden = true;
+                    }
+                }, 500);
+            }
         });
+        projectCards.forEach((card) => {
+            const isFiltered = filter !== ALL_PROJECTS && card.dataset.projectCategory !== filter;
+            card.hidden = false;
+            card.classList.toggle('is-filtered', isFiltered);
+            if (isFiltered) {
+                window.setTimeout(() => {
+                    if (card.classList.contains('is-filtered')) {
+                        card.hidden = true;
+                    }
+                }, 500);
+            }
+        });
+        updateYearGroups();
         updateProjectCount();
         setFilterToggleState(false);
+        keepFilterInPlace(filterTop);
     };
 
     filterToggle.addEventListener('click', () => {
