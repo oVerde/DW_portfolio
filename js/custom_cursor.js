@@ -1,6 +1,7 @@
 const INTERACTIVE_SELECTOR = 'a, button, input, select, textarea, [role="button"], [tabindex]:not([tabindex="-1"])';
 const CURSOR_ACCELERATION = 0.3;
 const CURSOR_DELAY = 0.2;
+const CURSOR_MORPH_DURATION = 550;
 
 export function initCustomCursor() {
     if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
@@ -10,6 +11,9 @@ export function initCustomCursor() {
     const cursor = document.createElement('span');
     cursor.className = 'custom-cursor';
     cursor.setAttribute('aria-hidden', 'true');
+    const cursorLabel = document.createElement('span');
+    cursorLabel.className = 'custom-cursor-label';
+    cursor.append(cursorLabel);
     document.body.append(cursor);
 
     let targetX = -100;
@@ -19,6 +23,14 @@ export function initCustomCursor() {
     let velocityX = 0;
     let velocityY = 0;
     let isVisible = false;
+    let isProject = false;
+    let morphResetTimer;
+
+    const playMorphAnimation = (animationClass) => {
+        cursor.classList.remove('is-morphing-in', 'is-morphing-out');
+        void cursor.offsetWidth;
+        cursor.classList.add(animationClass);
+    };
 
     const render = () => {
         velocityX += (targetX - currentX) * CURSOR_ACCELERATION;
@@ -33,7 +45,8 @@ export function initCustomCursor() {
             velocityX = 0;
             velocityY = 0;
         }
-        cursor.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) translate(-50%, -50%)`;
+        cursor.style.setProperty('--cursor-x', `${currentX}px`);
+        cursor.style.setProperty('--cursor-y', `${currentY}px`);
         window.requestAnimationFrame(render);
     };
 
@@ -45,10 +58,39 @@ export function initCustomCursor() {
             cursor.classList.add('is-visible');
         }
 
-        const interactiveElement = event.target instanceof Element
-            ? event.target.closest(INTERACTIVE_SELECTOR)
-            : null;
+        const element = event.target instanceof Element ? event.target : null;
+        const interactiveElement = element?.closest(INTERACTIVE_SELECTOR);
+        const projectCard = element?.closest('.project-card');
         cursor.classList.toggle('is-interactive', Boolean(interactiveElement));
+        cursorLabel.textContent = projectCard?.dataset.projectName ?? '';
+
+        if (projectCard) {
+            window.clearTimeout(morphResetTimer);
+            const tooltipWidth = cursorLabel.getBoundingClientRect().width + 32;
+            const isFlipped = event.clientX + tooltipWidth / 2 > window.innerWidth - 16;
+            const isShiftedRight = event.clientX - tooltipWidth / 2 < 16 && !isFlipped;
+            cursor.style.setProperty('--cursor-tooltip-width', `${tooltipWidth}px`);
+            cursor.classList.toggle('is-flipped', isFlipped);
+            cursor.classList.toggle('is-shifted-right', isShiftedRight);
+            if (!isProject) {
+                isProject = true;
+                cursor.classList.add('is-project');
+                playMorphAnimation('is-morphing-in');
+            }
+        } else {
+            cursor.classList.remove('is-flipped');
+            cursor.classList.remove('is-shifted-right');
+            if (isProject) {
+                isProject = false;
+                cursor.classList.remove('is-project');
+                playMorphAnimation('is-morphing-out');
+                window.clearTimeout(morphResetTimer);
+                morphResetTimer = window.setTimeout(() => {
+                    cursor.style.removeProperty('--cursor-tooltip-width');
+                    cursor.classList.remove('is-morphing-out');
+                }, CURSOR_MORPH_DURATION);
+            }
+        }
     });
 
     document.addEventListener('pointerleave', () => {

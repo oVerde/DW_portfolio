@@ -1,20 +1,6 @@
-// Change this value to control how many project images are displayed.
-const projectImageCount = 8;
-
-const PROJECTS = [
-    { name: 'Editorial project 01', category: 'Editorial', year: 2026 },
-    { name: 'Editorial project 02', category: 'Editorial', year: 2026 },
-    { name: 'Editorial project 03', category: 'Editorial', year: 2026 },
-    { name: 'UX/UI project 01', category: 'UX/UI', year: 2026 },
-    { name: 'Web project 01', category: 'Web', year: 2025 },
-    { name: 'Web project 02', category: 'Web', year: 2025 },
-    { name: 'Creative Code project 01', category: 'Creative Code', year: 2025 },
-    { name: 'Graphic Design project 01', category: 'Graphic Design', year: 2025 }
-];
-
 const slugify = (value) => value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
-export function renderProjects(imageCount = projectImageCount) {
+export function renderProjects(projects) {
     const grid = document.querySelector('[data-project-grid]');
     const list = document.querySelector('[data-project-list]');
 
@@ -22,7 +8,6 @@ export function renderProjects(imageCount = projectImageCount) {
         return;
     }
 
-    const projects = PROJECTS.slice(0, Math.max(1, Math.floor(Number(imageCount) || 1)));
     const groupedProjects = projects.reduce((groups, project) => {
         (groups[project.year] ??= []).push(project);
         return groups;
@@ -36,10 +21,11 @@ export function renderProjects(imageCount = projectImageCount) {
         card.dataset.projectYear = project.year;
         card.dataset.projectCategory = project.category;
 
-        const image = document.createElement('div');
+        const image = document.createElement('img');
         image.className = `project-image project-image--${slug}`;
-        image.setAttribute('role', 'img');
-        image.setAttribute('aria-label', `${project.name}, ${project.year}`);
+        image.src = project.cover.url;
+        image.alt = project.cover.alt;
+        image.loading = 'lazy';
         card.append(image);
         return card;
     }));

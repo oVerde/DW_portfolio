@@ -22,7 +22,9 @@ DW_portfolio/
 ├── index.html
 ├── README.md
 ├── api/
-│   └── api.js
+│   ├── api.js
+│   ├── images.js
+│   └── names.js
 ├── fonts/
 │   └── satoshi/
 │       └── Satoshi-*.woff2
@@ -109,7 +111,9 @@ Use these variables instead of hard-coding font names in component styles.
 - [`footer.js`] renders the footer.
 - [`filter.js`] is reserved for project filtering behaviour.
 - [`add_projects.js`] is reserved for adding or generating projects.
-- [`api.js`] is reserved for future API or external data integration.
+- [`api.js`] combines the local image and name modules into a JSON-shaped collection of 14 random projects. Each project has one cover, 3–8 additional images, a random year and a random tag.
+- [`images.js`] is a local JavaScript image module that generates random SVG images without external requests.
+- [`names.js`] is a local JavaScript name module that provides project names without external requests.
 
 The entry point is loaded as an ES module:
 
@@ -172,11 +176,11 @@ The corresponding CSS should remain in:
 
 ### Adding project content
 
-Project content can currently be edited in `index.html`. The planned role of `add_projects.js`, `filter.js` and `api.js` is to move this content towards a more reusable and dynamic system.
+Project content is fetched by `api.js` and rendered by `add_projects.js`. The filter module then uses the shared project data to keep the grid and list synchronized.
 
 When that work is implemented, project data should be kept separate from presentation logic wherever possible.
 
-The project image grid and the project list are both rendered by [`add_projects.js`](./js/add_projects.js) from the same `PROJECTS` array. Each project has a name, category and year, which are used to generate its image class, data attributes and list entry. Change `projectImageCount` in that file to control the number of displayed project slots. The value is always corrected to at least one slot, and the CSS places a maximum of three slots per row on desktop.
+The project image grid and the project list are both rendered by [`add_projects.js`](./js/add_projects.js) from the same projects returned by [`api.js`](./api/api.js). Each project JSON object has a `cover` object, an `images` array, a name, tag and year. The API limits the collection to 14 projects, and the CSS places a maximum of three slots per row on desktop.
 
 The projects header includes a responsive filter control. Opening `All projects` reveals one option for each category currently present in the project data. Selecting a category updates both the grid and the list, while the `No. Projetos` value is calculated from the visible projects.
 
