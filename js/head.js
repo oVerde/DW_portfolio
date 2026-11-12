@@ -9,7 +9,10 @@
         'css/intro_anim.css',
         'css/header_footer/header.css',
         'css/header_footer/footer.css',
-        'css/projects.css'
+        'css/projects.css',
+        'css/projects-filter.css',
+        'css/projects-list.css',
+        'css/projects-grid.css'
     ];
 
     stylesheets.forEach((href) => {

@@ -1,0 +1,105 @@
+.projects-filter {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.filter-toggle,
+.filter-option {
+    border: 0;
+    background: none;
+    color: var(--white);
+    cursor: pointer;
+    font-family: var(--font-display);
+}
+
+.filter-toggle {
+    display: flex;
+    align-self: flex-start;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0;
+    font-size: clamp(2rem, 5vw, 4rem);
+    cursor: pointer;
+}
+
+.filter-toggle:hover,
+.filter-toggle:focus-visible {
+    color: var(--white-hover);
+    transition: color 0.2s ease;
+}
+
+.filter-toggle [data-filter-label] {
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+}
+
+.filter-toggle [data-filter-icon] {
+    font-family: var(--font-display);
+    text-decoration: none;
+    text-decoration-line: none;
+}
+
+.filter-toggle .expand-icon {
+    align-self: flex-end;
+    font-family: var(--font-body);
+    padding-bottom: 1rem;
+}
+
+.filter-toggle[aria-expanded="true"] .expand-icon {
+    display: none;
+}
+
+.filter-toggle[aria-expanded="true"] {
+    color: var(--green-highlight);
+    transition: color 0.2s ease;
+}
+
+.filter-toggle[aria-expanded="true"]:hover,
+.filter-toggle[aria-expanded="true"]:focus-visible {
+    color: var(--black-hover);
+}
+
+.filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    max-width: 50rem;
+    max-height: 0;
+    overflow: hidden;
+    padding-block: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-1rem);
+    transition: max-height 0.45s ease, padding 0.45s ease, opacity 0.3s ease, transform 0.45s ease;
+}
+
+.filter-options.is-open {
+    max-height: 20rem;
+    padding-block: 4rem 1rem;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.filter-option {
+    padding: 0;
+    font-size: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.filter-option:hover,
+.filter-option:focus-visible {
+    color: var(--white-hover);
+    transition: color 0.2s ease;
+}
+
+@media (max-width: 48rem) {
+    .filter-options {
+        padding-block: 0;
+    }
+
+    .filter-options.is-open {
+        padding-block: 2rem 0;
+    }
+}

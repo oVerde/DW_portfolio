@@ -1,0 +1,44 @@
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(0.1rem, 0.1vw, 0.1rem);
+    margin: 0 0 clamp(1rem, 2vw, 1rem);
+}
+
+.project-card {
+    min-width: 0;
+    max-height: 100rem;
+    overflow: hidden;
+    opacity: 1;
+    transform: translateY(0);
+    transition: max-height 0.45s ease, opacity 0.3s ease, transform 0.45s ease;
+}
+
+.project-card.is-filtered {
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-1rem);
+}
+
+.project-card[hidden] {
+    display: none;
+}
+
+.project-image {
+    aspect-ratio: 1 / 1.2;
+    width: 100%;
+    background: var(--green-hover);
+}
+
+.project-image:hover {
+    cursor: pointer;
+    background-color: var(--white);
+    transition: background-color 0.2s ease;
+}
+
+@media (max-width: 48rem) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+}

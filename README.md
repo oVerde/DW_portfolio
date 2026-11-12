@@ -31,6 +31,9 @@ DW_portfolio/
 │   ├── global.css
 │   ├── intro_anim.css
 │   ├── projects.css
+│   ├── projects-filter.css
+│   ├── projects-grid.css
+│   ├── projects-list.css
 │   ├── variables.css
 │   └── header_footer/
 │       ├── footer.css
@@ -75,7 +78,10 @@ The currently prepared stylesheets are:
 - `intro_anim.css` — animations for the introduction or hero area.
 - `header.css` — styles specific to the header.
 - `footer.css` — styles specific to the footer.
-- `projects.css` — styles for the projects area.
+- `projects.css` — shared project section, header and responsive motion rules.
+- `projects-filter.css` — project filter controls and options.
+- `projects-list.css` — project year groups and list buttons.
+- `projects-grid.css` — project image grid and cards.
 
 Stylesheets are loaded in order by `head.js`, with `variables.css` loaded first so that the remaining files can use the shared design tokens.
 
@@ -148,7 +154,7 @@ Alternatively, use the **Live Server** extension in VS Code.
 1. Put shared colours and typography values in `css/variables.css`.
 2. Put general page rules in `css/global.css`.
 3. Keep header and footer rules in `css/header_footer/`.
-4. Keep project-specific rules in `css/projects.css`.
+4. Keep project section rules in `css/projects.css`, filter rules in `css/projects-filter.css`, list rules in `css/projects-list.css`, and grid/card rules in `css/projects-grid.css`.
 5. Add animation rules to `animations.css` or `intro_anim.css`, depending on their scope.
 
 If a new stylesheet is created, add its path to the `stylesheets` array in [`js/head.js`](./js/head.js).
