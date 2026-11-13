@@ -1,7 +1,6 @@
 const INTERACTIVE_SELECTOR = 'a, button, input, select, textarea, [role="button"], [tabindex]:not([tabindex="-1"])';
 const CURSOR_ACCELERATION = 0.8;
 const CURSOR_DELAY = 0.2;
-const CURSOR_MORPH_DURATION = 550;
 
 export function initCustomCursor() {
     if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
@@ -24,14 +23,6 @@ export function initCustomCursor() {
     let velocityY = 0;
     let isVisible = false;
     let isProject = false;
-    let morphResetTimer;
-
-    const playMorphAnimation = (animationClass) => {
-        cursor.classList.remove('is-morphing-in', 'is-morphing-out');
-        void cursor.offsetWidth;
-        cursor.classList.add(animationClass);
-    };
-
     const render = () => {
         velocityX += (targetX - currentX) * CURSOR_ACCELERATION;
         velocityY += (targetY - currentY) * CURSOR_ACCELERATION;
@@ -65,7 +56,6 @@ export function initCustomCursor() {
         cursorLabel.textContent = projectCard?.dataset.projectName ?? '';
 
         if (projectCard) {
-            window.clearTimeout(morphResetTimer);
             const tooltipWidth = cursorLabel.getBoundingClientRect().width + 32;
             const isFlipped = event.clientX + tooltipWidth / 2 > window.innerWidth - 16;
             const isShiftedRight = event.clientX - tooltipWidth / 2 < 16 && !isFlipped;
@@ -75,7 +65,6 @@ export function initCustomCursor() {
             if (!isProject) {
                 isProject = true;
                 cursor.classList.add('is-project');
-                playMorphAnimation('is-morphing-in');
             }
         } else {
             cursor.classList.remove('is-flipped');
@@ -83,12 +72,7 @@ export function initCustomCursor() {
             if (isProject) {
                 isProject = false;
                 cursor.classList.remove('is-project');
-                playMorphAnimation('is-morphing-out');
-                window.clearTimeout(morphResetTimer);
-                morphResetTimer = window.setTimeout(() => {
-                    cursor.style.removeProperty('--cursor-tooltip-width');
-                    cursor.classList.remove('is-morphing-out');
-                }, CURSOR_MORPH_DURATION);
+                cursor.style.removeProperty('--cursor-tooltip-width');
             }
         }
     });

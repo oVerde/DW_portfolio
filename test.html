@@ -3,17 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>External API image test</title>
+    <title>External images test</title>
     <style>
-        :root {
-            color: #131713;
-            background: #fcfdff;
-            font-family: Arial, sans-serif;
-        }
-
         body {
             margin: 0;
             padding: 2rem;
+            color: #131713;
+            font-family: Arial, sans-serif;
         }
 
         h1 {
@@ -24,32 +20,27 @@
             margin-bottom: 2rem;
         }
 
-        .projects {
+        .images {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-            gap: 2rem 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+            gap: 0.5rem;
         }
 
-        .project {
-            min-width: 0;
+        figure {
+            margin: 0;
         }
 
-        .project h2 {
-            margin: 0.75rem 0 0.25rem;
-            font-size: 1.1rem;
-        }
-
-        .project p {
-            margin: 0 0 0.75rem;
-            color: #6a836e;
-        }
-
-        .images img {
+        img {
             display: block;
             width: 100%;
             aspect-ratio: 1 / 1.2;
             object-fit: cover;
             background: #6a836e;
+        }
+
+        figcaption {
+            padding-top: 0.35rem;
+            font-size: 0.75rem;
         }
 
         .error {
@@ -59,49 +50,41 @@
 </head>
 <body>
     <h1>Images used by index</h1>
-    <p id="status">Loading external images...</p>
-    <main class="projects" id="projects"></main>
+    <p id="status">Loading images from Picsum Photos...</p>
+    <main class="images" id="images"></main>
 
     <script type="module">
         import { fetchImages } from './api/images.js';
 
         const status = document.querySelector('#status');
-        const projectsContainer = document.querySelector('#projects');
-
-        const createImage = (image) => {
-            const element = document.createElement('img');
-            element.src = image.url;
-            element.alt = image.alt;
-            element.loading = 'lazy';
-            return element;
-        };
+        const imagesContainer = document.querySelector('#images');
 
         fetchImages()
             .then((images) => {
-                projectsContainer.replaceChildren(...images.slice(0, 10).map((image, index) => {
-                    const article = document.createElement('article');
-                    article.className = 'project';
+                imagesContainer.replaceChildren(...images.map((image, index) => {
+                    const figure = document.createElement('figure');
+                    const element = document.createElement('img');
+                    const caption = document.createElement('figcaption');
 
-                    const title = document.createElement('h2');
-                    title.textContent = `External image ${index + 1}`;
+                    element.src = image.url;
+                    element.alt = `${image.author} image ${index + 1}`;
+                    element.loading = 'lazy';
+                    element.addEventListener('error', () => {
+                        caption.textContent = `Image ${index + 1} failed to load`;
+                        caption.className = 'error';
+                    });
 
-                    const details = document.createElement('p');
-                    details.textContent = image.author;
-
-                    const images = document.createElement('div');
-                    images.className = 'images';
-                    images.append(createImage(image));
-
-                    article.append(title, details, images);
-                    return article;
+                    caption.textContent = `${index + 1}. ${image.author} (ID: ${image.id})`;
+                    figure.append(element, caption);
+                    return figure;
                 }));
 
-                status.textContent = `${images.slice(0, 10).length} external images loaded.`;
+                status.textContent = `${images.length} images loaded from the external API.`;
             })
             .catch((error) => {
-                console.error('Unable to load test images:', error);
+                console.error('Unable to load external images:', error);
                 status.className = 'error';
-                status.textContent = `Unable to load external APIs: ${error.message}`;
+                status.textContent = `Unable to load external images: ${error.message}`;
             });
     </script>
 </body>
