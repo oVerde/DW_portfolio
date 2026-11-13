@@ -1,5 +1,15 @@
 const IMAGE_COUNT = 126;
-const IMAGE_COLOURS = ['00C760', '6A836E', '18211D', 'C1D8B3', 'FCFDFF'];
+const EXTERNAL_IMAGE_URLS = [
+    'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=600&q=80',
+    'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=600&q=80',
+    'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80',
+    'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80',
+    'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=600&q=80',
+    'https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=600&q=80',
+    'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80',
+    'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=600&q=80',
+    'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80'
+];
 
 const shuffle = (items) => {
     const shuffledItems = [...items];
@@ -12,31 +22,16 @@ const shuffle = (items) => {
     return shuffledItems;
 };
 
-const createImageUrl = (index) => {
-    const firstColour = IMAGE_COLOURS[index % IMAGE_COLOURS.length];
-    const secondColour = IMAGE_COLOURS[(index + 2) % IMAGE_COLOURS.length];
-    const svg = `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 760">
-            <defs>
-                <linearGradient id="gradient" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stop-color="#${firstColour}"/>
-                    <stop offset="100%" stop-color="#${secondColour}"/>
-                </linearGradient>
-            </defs>
-            <rect width="600" height="760" fill="url(#gradient)"/>
-            <circle cx="${100 + (index * 47) % 400}" cy="${150 + (index * 61) % 500}" r="${80 + (index * 13) % 180}" fill="#FCFDFF" fill-opacity=".18"/>
-        </svg>
-    `;
+export async function fetchImages() {
+    const images = Array.from({ length: IMAGE_COUNT }, (_, index) => {
+        const imageNumber = index % EXTERNAL_IMAGE_URLS.length;
 
-    return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
-};
-
-export function fetchImages() {
-    const images = Array.from({ length: IMAGE_COUNT }, (_, index) => ({
-        id: `local-image-${index + 1}`,
-        url: createImageUrl(index),
-        author: 'Local image generator'
-    }));
+        return {
+            id: `external-image-${imageNumber + 1}`,
+            url: EXTERNAL_IMAGE_URLS[imageNumber],
+            author: 'Unsplash'
+        };
+    });
 
     return Promise.resolve(shuffle(images));
 }

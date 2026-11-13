@@ -111,9 +111,9 @@ Use these variables instead of hard-coding font names in component styles.
 - [`footer.js`] renders the footer.
 - [`filter.js`] is reserved for project filtering behaviour.
 - [`add_projects.js`] is reserved for adding or generating projects.
-- [`api.js`] combines the local image and name modules into a JSON-shaped collection of 14 random projects. Each project has one cover, 3–8 additional images, a random year and a random tag.
-- [`images.js`] is a local JavaScript image module that generates random SVG images without external requests.
-- [`names.js`] is a local JavaScript name module that provides project names without external requests.
+- [`api.js`] combines the external image and name modules into a JSON-shaped collection of 14 random projects. Each project has one cover, 3–8 additional images, a random year and a random tag.
+- [`images.js`] uses 10 external Unsplash image URLs and repeats them when necessary to provide enough images for all projects.
+- [`names.js`] retrieves project names from the external Random User API.
 
 The entry point is loaded as an ES module:
 

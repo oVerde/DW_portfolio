@@ -45,6 +45,8 @@
     align-self: flex-end;
     font-family: var(--font-body);
     padding-bottom: 1rem;
+    font-size: clamp(1.25rem, 1.5vw, 1rem);
+    color: var(--black-hover);
 }
 
 .filter-toggle[aria-expanded="true"] .expand-icon {

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>External API image test</title>
+    <style>
+        :root {
+            color: #131713;
+            background: #fcfdff;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 2rem;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        #status {
+            margin-bottom: 2rem;
+        }
+
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+            gap: 2rem 1rem;
+        }
+
+        .project {
+            min-width: 0;
+        }
+
+        .project h2 {
+            margin: 0.75rem 0 0.25rem;
+            font-size: 1.1rem;
+        }
+
+        .project p {
+            margin: 0 0 0.75rem;
+            color: #6a836e;
+        }
+
+        .images img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 1 / 1.2;
+            object-fit: cover;
+            background: #6a836e;
+        }
+
+        .error {
+            color: #a00000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Images used by index</h1>
+    <p id="status">Loading external images...</p>
+    <main class="projects" id="projects"></main>
+
+    <script type="module">
+        import { fetchImages } from './api/images.js';
+
+        const status = document.querySelector('#status');
+        const projectsContainer = document.querySelector('#projects');
+
+        const createImage = (image) => {
+            const element = document.createElement('img');
+            element.src = image.url;
+            element.alt = image.alt;
+            element.loading = 'lazy';
+            return element;
+        };
+
+        fetchImages()
+            .then((images) => {
+                projectsContainer.replaceChildren(...images.slice(0, 10).map((image, index) => {
+                    const article = document.createElement('article');
+                    article.className = 'project';
+
+                    const title = document.createElement('h2');
+                    title.textContent = `External image ${index + 1}`;
+
+                    const details = document.createElement('p');
+                    details.textContent = image.author;
+
+                    const images = document.createElement('div');
+                    images.className = 'images';
+                    images.append(createImage(image));
+
+                    article.append(title, details, images);
+                    return article;
+                }));
+
+                status.textContent = `${images.slice(0, 10).length} external images loaded.`;
+            })
+            .catch((error) => {
+                console.error('Unable to load test images:', error);
+                status.className = 'error';
+                status.textContent = `Unable to load external APIs: ${error.message}`;
+            });
+    </script>
+</body>
+</html>
