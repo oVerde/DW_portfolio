@@ -15,8 +15,39 @@ export function initProjectFilters() {
     const projectCards = [...document.querySelectorAll('.project-card')];
     const yearGroups = [...document.querySelectorAll('.year-group')];
     const filters = [ALL_PROJECTS, ...new Set(projectItems.map((item) => item.dataset.projectCategory))];
+    let countAnimationFrame;
+
+    const animateProjectCount = (targetCount) => {
+        window.cancelAnimationFrame(countAnimationFrame);
+
+        const startCount = Number(projectCount.textContent) || 0;
+        const startTime = performance.now();
+        const duration = 500;
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            projectCount.textContent = targetCount;
+            return;
+        }
+
+        const updateCount = (currentTime) => {
+            const progress = Math.min((currentTime - startTime) / duration, 1);
+            const easedProgress = progress < 0.5
+                ? 4 * progress ** 3
+                : 1 - ((-2 * progress + 2) ** 3) / 2;
+            const currentCount = Math.round(startCount + (targetCount - startCount) * easedProgress);
+            projectCount.textContent = currentCount;
+
+            if (progress < 1) {
+                countAnimationFrame = window.requestAnimationFrame(updateCount);
+            }
+        };
+
+        countAnimationFrame = window.requestAnimationFrame(updateCount);
+    };
+
     const updateProjectCount = () => {
-        projectCount.textContent = projectItems.filter((item) => !item.classList.contains('is-filtered')).length;
+        const visibleProjects = projectItems.filter((item) => !item.classList.contains('is-filtered')).length;
+        animateProjectCount(visibleProjects);
     };
 
     const updateYearGroups = () => {

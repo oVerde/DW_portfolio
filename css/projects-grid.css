@@ -25,7 +25,7 @@
 }
 
 .project-card:hover .project-image {
-    filter: blur(0.3rem);
+    filter: blur(0.1rem);
     transform: scale(1.08);
 }
 
