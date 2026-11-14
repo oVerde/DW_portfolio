@@ -26,7 +26,8 @@ export async function fetchProjects() {
             name,
             category,
             2020 + getRandomIndex(7),
-            projectImages
+            projectImages,
+            `project-${index + 1}`
         ));
     }
 

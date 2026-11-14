@@ -1,8 +1,8 @@
-export function createProject(name, category, year, projectImages) {
+export function createProject(name, category, year, projectImages, projectId = projectImages[0].id) {
     const cover = projectImages[0];
 
     return {
-        id: cover.id,
+        id: projectId,
         name,
         category,
         year,

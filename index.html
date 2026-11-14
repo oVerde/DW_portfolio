@@ -40,10 +40,6 @@
                     <button class="topbar__link project-detail-close" type="button">Close</button>
                     <a class="topbar__link" href="#" data-project-website hidden>Open Website</a>
                 </nav>
-
-
-
-
                 
                 <div class="page">
                     <header class="project-header">
@@ -53,9 +49,22 @@
                                 <p class="summary project-detail-summary"></p>
                                 <ul class="tags project-detail-tags"></ul>
                             </div>
-                            <a class="btn project-detail-about" href="#project-detail-content">About Project +</a>
                         </div>
                     </header>
+
+                    <button
+                        class="btn project-detail-about"
+                        type="button"
+                        aria-expanded="false"
+                        aria-controls="project-detail-content"
+                    >
+                        About Project +
+                    </button>
+
+                    <section id="project-detail-content" class="project-detail-content">
+                        <h2 class="project-detail-content-title">About the project</h2>
+                        <p class="project-detail-description"></p>
+                    </section>
 
                     <div class="media media--hero project-detail-hero"></div>
 
@@ -72,11 +81,6 @@
                     <div class="grid-2">
                         <div class="media media--tall project-detail-secondary-media"></div>
                     </div>
-
-                    <section id="project-detail-content" class="project-detail-content">
-                        <h2 class="project-detail-content-title">About the project</h2>
-                        <p class="project-detail-description"></p>
-                    </section>
 
                     <footer class="next project-header">
                         <p class="next__label">next project</p>

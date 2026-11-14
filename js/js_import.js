@@ -13,8 +13,16 @@ initCustomCursor();
 fetchProjects()
     .then((projects) => {
         renderProjects(projects);
-        initProjectFilters();
-        initProjectDetails(projects);
+        try {
+            initProjectFilters();
+        } catch (error) {
+            console.error('Unable to initialize project filters:', error);
+        }
+        try {
+            initProjectDetails(projects);
+        } catch (error) {
+            console.error('Unable to initialize project details:', error);
+        }
     })
     .catch((error) => {
         console.error('Unable to load projects:', error);
