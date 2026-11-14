@@ -23,7 +23,11 @@ export function populateProjectDetail(project, nextProject, detail, detailTempla
     statements.forEach((statement) => {
         statement.textContent = `${project.name} — ${project.category}, ${project.year}.`;
     });
-    description.textContent = `${project.name} is a ${project.category} project from ${project.year}.`;
+    description.replaceChildren(...project.about.map((paragraph) => {
+        const element = document.createElement('p');
+        element.textContent = paragraph;
+        return element;
+    }));
 
     appendProjectImage(hero, project.cover);
     project.images.slice(0, 2).forEach((image) => {

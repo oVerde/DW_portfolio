@@ -25,6 +25,9 @@ export function initProjectDetails(projects) {
     let headerTop = 0;
     let scrollingTimeout;
     let touchStartedInAbout = false;
+    let panelTopBeforeAbout;
+
+    const isMobile = () => window.matchMedia('(max-width: 700px)').matches;
 
     const updateHeaderHeight = () => {
         headerTop = header.getBoundingClientRect().height;
@@ -76,9 +79,23 @@ export function initProjectDetails(projects) {
 
     const setAboutState = (isOpen) => {
         detail.classList.toggle('is-about-open', isOpen);
+        if (isMobile() && activeProject) {
+            if (isOpen) {
+                panelTopBeforeAbout = panelTop;
+                panelTop = headerTop;
+                detail.style.top = `${panelTop}px`;
+                detail.classList.add('is-expanded');
+            } else if (panelTopBeforeAbout !== undefined) {
+                panelTop = panelTopBeforeAbout;
+                detail.style.top = `${panelTop}px`;
+                detail.classList.toggle('is-expanded', panelTop === headerTop);
+                panelTopBeforeAbout = undefined;
+            }
+        }
         const aboutButton = detail.querySelector('.project-detail-about');
         if (aboutButton instanceof HTMLButtonElement) {
             aboutButton.setAttribute('aria-expanded', String(isOpen));
+            aboutButton.textContent = isOpen ? 'Close About ×' : 'About Project +';
         }
     };
 
@@ -196,6 +213,11 @@ export function initProjectDetails(projects) {
             return;
         }
 
+        const isMobileAboutOpen = isMobile() && detail.classList.contains('is-about-open');
+        if (isMobileAboutOpen) {
+            return;
+        }
+
         markScrolling();
 
         const isInsideDetail = event.target instanceof Element && detail.contains(event.target);
@@ -236,7 +258,7 @@ export function initProjectDetails(projects) {
             return;
         }
 
-        if (touchStartedInAbout) {
+        if (touchStartedInAbout && !(isMobile() && detail.classList.contains('is-about-open'))) {
             detail.scrollTop += touchDelta;
             event.preventDefault();
             touchStartY = event.touches[0].clientY;

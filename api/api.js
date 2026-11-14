@@ -1,5 +1,6 @@
 import { fetchImages } from './images.js';
 import { fetchNames } from './names.js';
+import { fetchAboutTexts } from './about-api.js';
 import {
     MAX_PROJECT_IMAGES,
     MIN_PROJECT_IMAGES,
@@ -10,7 +11,11 @@ import { createProject } from './create-project.js';
 import { getRandomIndex } from './get-random-index.js';
 
 export async function fetchProjects() {
-    const [images, names] = await Promise.all([fetchImages(), fetchNames()]);
+    const [images, names, aboutTexts] = await Promise.all([
+        fetchImages(),
+        fetchNames(),
+        fetchAboutTexts(PROJECT_COUNT)
+    ]);
     const projects = [];
     let imageIndex = 0;
 
@@ -27,7 +32,8 @@ export async function fetchProjects() {
             category,
             2020 + getRandomIndex(7),
             projectImages,
-            `project-${index + 1}`
+            `project-${index + 1}`,
+            aboutTexts[index]
         ));
     }
 

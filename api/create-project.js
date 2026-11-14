@@ -1,4 +1,11 @@
-export function createProject(name, category, year, projectImages, projectId = projectImages[0].id) {
+export function createProject(
+    name,
+    category,
+    year,
+    projectImages,
+    projectId = projectImages[0].id,
+    about = []
+) {
     const cover = projectImages[0];
 
     return {
@@ -6,6 +13,7 @@ export function createProject(name, category, year, projectImages, projectId = p
         name,
         category,
         year,
+        about,
         cover: {
             url: cover.url,
             alt: `${name} project cover by ${cover.author}`

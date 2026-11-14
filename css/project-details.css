@@ -380,8 +380,14 @@
 
 @media (max-width: 700px) {
     [data-project-detail].is-about-open .page {
+        display: flex;
+        flex-direction: column;
         grid-template-columns: 1fr;
         width: 100%;
+    }
+
+    [data-project-detail].is-about-open .page > *:not(.project-detail-about):not(.project-detail-content) {
+        display: none;
     }
 
     [data-project-detail] .project-detail-content {
@@ -389,8 +395,43 @@
     }
 
     [data-project-detail].is-about-open .project-detail-content {
-        grid-column: 1;
-        grid-row: auto;
+        position: relative;
+        order: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: calc(100vh - var(--project-topbar-height, 0px) - 72px);
+        width: 100%;
+        padding: 32px var(--padding-inline) 48px;
+        background: var(--black);
+        text-align: center;
+    }
+
+    [data-project-detail].is-about-open .project-detail-content::after {
+        position: fixed;
+        right: 0;
+        bottom: 64px;
+        left: 0;
+        height: 56px;
+        background: linear-gradient(to bottom, rgb(0 0 0 / 0%), var(--black));
+        content: '';
+        pointer-events: none;
+    }
+
+    [data-project-detail].is-about-open .project-detail-content-title,
+    [data-project-detail].is-about-open .project-detail-description {
+        width: min(100%, 34rem);
+    }
+
+    [data-project-detail].is-about-open .project-detail-about {
+        order: 2;
+        align-self: center;
+        margin: 0;
+        transform: none;
+        transition:
+            background 0.3s ease,
+            opacity 0.25s ease,
+            transform 0.3s ease;
     }
 
     [data-project-detail] .grid-2 {
