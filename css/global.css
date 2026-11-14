@@ -10,12 +10,17 @@ body {
     cursor: default;
     color: var(--white);
     width: 100vw;
+    line-height: 1.1;
 }
 
 .hero-title {
-        font-family: var(--font-display);
-    font-weight: 700;
+    font-family: var(--font-body);
+    font-weight: 400;
     color: var(--white);
     padding-inline: var(--padding-inline);
-    font-size: clamp(1rem, 4vw, 3rem);
+    font-size: clamp(1rem, 4vw, 4.6rem);
+}
+
+.hero-title__highlight {
+    font-family: var(--font-display);
 }
