@@ -12,7 +12,8 @@
         'css/projects.css',
         'css/projects-filter.css',
         'css/projects-list.css',
-        'css/projects-grid.css'
+        'css/projects-grid.css',
+        'css/project-details.css'
     ];
 
     stylesheets.forEach((href) => {

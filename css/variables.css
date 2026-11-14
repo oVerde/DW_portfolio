@@ -11,6 +11,13 @@
 
     --font-display: "Basteleur Bold", Georgia, serif;
     --font-body: "Satoshi", Arial, sans-serif;
+
+    --cursor-size: 0.35rem;
+    --cursor-tooltip-width: var(--cursor-size);
+    --cursor-color: var(--white);
+    --cursor-hover-color: var(--green-hover);
+    --cursor-tooltip-text-color: var(--black);
+    --cursor-transition: 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @font-face {

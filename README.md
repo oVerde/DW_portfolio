@@ -203,7 +203,7 @@ Possible next steps include:
 - Replace placeholder project entries with real project data.
 - Implement project filtering by category and year.
 - Connect the project list to a local data source or API.
-- Add project detail pages.
+- Open project details in a bottom sheet that expands to the sticky header on scroll.
 - Complete the responsive layout.
 - Add the visual system and shared CSS variables.
 - Implement the planned intro, page and hover animations.

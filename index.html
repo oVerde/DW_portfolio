@@ -34,6 +34,60 @@
 
             <div class="projects-list" data-project-list></div>
         </section>
+        <template id="project-detail-template">
+            <article class="project-detail-page">
+                <nav class="topbar" aria-label="Project navigation">
+                    <button class="topbar__link project-detail-close" type="button">Close</button>
+                    <a class="topbar__link" href="#" data-project-website hidden>Open Website</a>
+                </nav>
+
+
+
+
+                
+                <div class="page">
+                    <header class="project-header">
+                        <h1 class="title project-detail-title"></h1>
+                        <div class="project-header__row">
+                            <div class="project-header__info">
+                                <p class="summary project-detail-summary"></p>
+                                <ul class="tags project-detail-tags"></ul>
+                            </div>
+                            <a class="btn project-detail-about" href="#project-detail-content">About Project +</a>
+                        </div>
+                    </header>
+
+                    <div class="media media--hero project-detail-hero"></div>
+
+                    <p class="statement statement--center project-detail-statement"></p>
+
+                    <div class="grid-2 project-detail-gallery">
+                        <template id="project-detail-image-template">
+                            <div class="media media--tall project-detail-media"></div>
+                        </template>
+                    </div>
+
+                    <p class="statement statement--left project-detail-statement"></p>
+
+                    <div class="grid-2">
+                        <div class="media media--tall project-detail-secondary-media"></div>
+                    </div>
+
+                    <section id="project-detail-content" class="project-detail-content">
+                        <h2 class="project-detail-content-title">About the project</h2>
+                        <p class="project-detail-description"></p>
+                    </section>
+
+                    <footer class="next">
+                        <p class="next__label">Next Project</p>
+                        <h2 class="title next-project-title"></h2>
+                        <p class="summary next-project-summary"></p>
+                        <ul class="tags next-project-tags"></ul>
+                    </footer>
+                </div>
+            </article>
+        </template>
+        <div data-project-detail aria-hidden="true"></div>
 
     </main>
     <div data-component="footer"></div>

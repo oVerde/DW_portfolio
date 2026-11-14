@@ -20,6 +20,10 @@ export function renderProjects(projects) {
         card.dataset.projectName = project.name;
         card.dataset.projectYear = project.year;
         card.dataset.projectCategory = project.category;
+        card.dataset.projectId = project.id;
+        card.setAttribute('tabindex', '0');
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-label', `Open ${project.name} project`);
 
         const image = document.createElement('img');
         image.className = `project-image project-image--${slug}`;
@@ -45,10 +49,12 @@ export function renderProjects(projects) {
             item.dataset.projectName = project.name;
             item.dataset.projectYear = project.year;
             item.dataset.projectCategory = project.category;
+            item.dataset.projectId = project.id;
 
             const button = document.createElement('button');
             button.className = 'project-button';
             button.type = 'button';
+            button.dataset.projectId = project.id;
             button.innerHTML = `<span class="project-name">${project.name}</span><span class="project-category">${project.category}</span>`;
             item.append(button);
             return item;
