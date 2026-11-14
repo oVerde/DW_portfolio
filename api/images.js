@@ -13,16 +13,7 @@ const EXTERNAL_IMAGE_URLS = [
     'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80',
 ];
 
-const shuffle = (items) => {
-    const shuffledItems = [...items];
-
-    for (let index = shuffledItems.length - 1; index > 0; index -= 1) {
-        const randomIndex = Math.floor(Math.random() * (index + 1));
-        [shuffledItems[index], shuffledItems[randomIndex]] = [shuffledItems[randomIndex], shuffledItems[index]];
-    }
-
-    return shuffledItems;
-};
+import { shuffleItems } from './shuffle-items.js';
 
 export async function fetchImages() {
     const images = Array.from({ length: IMAGE_COUNT }, (_, index) => {
@@ -35,5 +26,5 @@ export async function fetchImages() {
         };
     });
 
-    return shuffle(images);
+    return shuffleItems(images);
 }

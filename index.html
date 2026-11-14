@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>João Verde</title>
-    <script src="js/head.js"></script>
+    <script type="module" src="js/head.js"></script>
 </head>
 <body>
     <div data-component="header"></div>
@@ -78,11 +78,16 @@
                         <p class="project-detail-description"></p>
                     </section>
 
-                    <footer class="next">
-                        <p class="next__label">Next Project</p>
+                    <footer class="next project-header">
+                        <p class="next__label">next project</p>
                         <h2 class="title next-project-title"></h2>
-                        <p class="summary next-project-summary"></p>
-                        <ul class="tags next-project-tags"></ul>
+                        <div class="project-header__row">
+                            <div class="project-header__info">
+                                <p class="summary next-project-summary"></p>
+                                <ul class="tags next-project-tags"></ul>
+                            </div>
+                            <button class="btn next-project-link" type="button">Next Project →</button>
+                        </div>
                     </footer>
                 </div>
             </article>

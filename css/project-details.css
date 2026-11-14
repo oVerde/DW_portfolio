@@ -10,13 +10,18 @@
     transform: translateY(100%);
     visibility: hidden;
     pointer-events: none;
-    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition:
+        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0s linear 0.7s;
 }
 
 [data-project-detail].is-open {
     transform: translateY(0);
     visibility: visible;
     pointer-events: auto;
+    transition:
+        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0s;
 }
 
 [data-project-detail].is-expanded {
@@ -71,6 +76,8 @@
     font-weight: 800;
     font-size: clamp(2.2rem, 5vw, 3.4rem);
     line-height: 1.1;
+
+    padding: 0;
 }
 
 [data-project-detail] .summary {
@@ -98,12 +105,18 @@
 
 [data-project-detail] .btn {
     display: inline-block;
+    border: 0;
     padding: 7px 20px;
     border-radius: 5px;
     background: var(--green-highlight);
+    color: var(--black);
     font-size: clamp(1.05rem, 1.5vw, 1.2rem);
     text-decoration: none;
     white-space: nowrap;
+}
+
+[data-project-detail] .project-detail-about {
+    color: var(--black);
 }
 
 
@@ -171,6 +184,7 @@
 [data-project-detail] .project-detail-content,
 [data-project-detail] .next {
     text-align: center;
+    padding: 0 var(--padding-inline);
 }
 
 [data-project-detail] .statement {
@@ -179,7 +193,6 @@
     font-family: var(--font-display);
     font-weight: 400;
     font-size: clamp(1.4rem, 2.6vw, 2.1rem);
-    line-height: 1.15;
 }
 
 [data-project-detail] .statement--center {
@@ -202,12 +215,13 @@
 }
 
 [data-project-detail] .next {
-    padding: clamp(50px, 8vw, 80px) var(--padding-inline) 40px;
+    border-top: 1px solid var(--green-highlight);
+    text-align: left;
 }
 
 [data-project-detail] .next__label {
-    margin-bottom: 8px;
-    font-size: 0.8rem;
+    font-size: 1rem;
+    color: var(--green-highlight);
 }
 
 @media (max-width: 700px) {

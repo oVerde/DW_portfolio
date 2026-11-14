@@ -1,7 +1,7 @@
-const PROJECT_COUNT = 14;
-const NAME_API_URL = 'https://random-word-api.herokuapp.com/word?number=28';
+import { PROJECT_COUNT } from './project-settings.js';
+import { formatProjectWord } from './format-project-word.js';
 
-const formatWord = (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+const NAME_API_URL = 'https://random-word-api.herokuapp.com/word?number=28';
 
 export async function fetchNames() {
     const response = await fetch(NAME_API_URL);
@@ -19,6 +19,6 @@ export async function fetchNames() {
     return Array.from({ length: PROJECT_COUNT }, (_, index) => {
         const firstWord = words[index * 2];
         const secondWord = words[index * 2 + 1];
-        return `${formatWord(firstWord)} ${formatWord(secondWord)}`;
+        return `${formatProjectWord(firstWord)} ${formatProjectWord(secondWord)}`;
     });
 }

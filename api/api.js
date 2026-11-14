@@ -1,11 +1,13 @@
 import { fetchImages } from './images.js';
 import { fetchNames } from './names.js';
-
-const RANDOM_TAGS = ['Editorial', 'UX/UI', 'Web', 'Creative Code', 'Graphic Design'];
-const PROJECT_COUNT = 14;
-const MIN_PROJECT_IMAGES = 3;
-const MAX_PROJECT_IMAGES = 8;
-const randomValue = (max) => Math.floor(Math.random() * max);
+import {
+    MAX_PROJECT_IMAGES,
+    MIN_PROJECT_IMAGES,
+    PROJECT_COUNT,
+    RANDOM_PROJECT_TAGS
+} from './project-settings.js';
+import { createProject } from './create-project.js';
+import { getRandomIndex } from './get-random-index.js';
 
 export async function fetchProjects() {
     const [images, names] = await Promise.all([fetchImages(), fetchNames()]);
@@ -14,26 +16,18 @@ export async function fetchProjects() {
 
     for (let index = 0; index < PROJECT_COUNT; index += 1) {
         const name = names[index];
-        const category = RANDOM_TAGS[randomValue(RANDOM_TAGS.length)];
-        const imageCount = MIN_PROJECT_IMAGES + randomValue(MAX_PROJECT_IMAGES - MIN_PROJECT_IMAGES + 1);
+        const category = RANDOM_PROJECT_TAGS[getRandomIndex(RANDOM_PROJECT_TAGS.length)];
+        const imageCount = MIN_PROJECT_IMAGES
+            + getRandomIndex(MAX_PROJECT_IMAGES - MIN_PROJECT_IMAGES + 1);
         const projectImages = images.slice(imageIndex, imageIndex + imageCount + 1);
-        const cover = projectImages[0];
         imageIndex += imageCount + 1;
 
-        projects.push({
-            id: cover.id,
+        projects.push(createProject(
             name,
             category,
-            year: 2020 + randomValue(7),
-            cover: {
-                url: cover.url,
-                alt: `${name} project cover by ${cover.author}`
-            },
-            images: projectImages.slice(1).map((image) => ({
-                url: image.url,
-                alt: `${name} project image by ${image.author}`
-            }))
-        });
+            2020 + getRandomIndex(7),
+            projectImages
+        ));
     }
 
     return projects;
