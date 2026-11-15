@@ -1,143 +1,265 @@
-# João Verde — Portfolio
+# João Verde — Multimedia Design Portfolio
 
-This repository contains the personal portfolio website of **João Verde**, a multimedia designer and visual storyteller.
+This repository contains the personal portfolio of **João Verde**, a multimedia
+designer interested in visual communication, interaction and experimentation.
 
-The website is being developed as a focused space to present creative work, projects, skills and design experiments. Its structure is intentionally simple and modular, making it easy to evolve from a static portfolio into a more dynamic and maintainable experience.
+The website was created as a front-end project for the **Web Development 2026**
+course at MDM — University of Coimbra. It presents a collection of projects
+through an editorial layout focused on typography, image composition, motion and
+clear navigation.
 
-## What this project is for
+## About the project
 
-The portfolio will serve as:
+The portfolio is designed as a visual experience rather than a traditional
+list of projects. Visitors can browse the work, filter projects, open a detailed
+project view and read a generated About section for each project.
 
-- A professional presentation of João Verde's design work.
-- A visual archive of academic, experimental and professional projects.
-- A clear way to organise projects by year and category.
-- A place to communicate design interests, skills and creative process.
-- A foundation for future interactions, animations, filters and API-driven content.
+The project intentionally uses a small amount of content and a strong visual
+system:
 
-The visual direction is based on a clean editorial layout, with emphasis on typography, project presentation and motion. The goal is not only to show finished work, but also to communicate a design approach and personality.
+- dark background with green highlights;
+- Basteleur for display typography;
+- Satoshi for body text and interface elements;
+- animated transitions between project states;
+- responsive layouts for desktop, tablet and mobile screens.
 
-## Current structure
+## Main features
 
+### Project catalogue
+
+Projects are rendered dynamically from a shared project collection. Each project
+contains:
+
+- a unique identifier;
+- a generated name;
+- a category;
+- a year;
+- a cover image;
+- additional project images;
+- an About section with up to four paragraphs.
+
+The projects can be displayed as a visual grid and as a grouped list. The
+project count updates according to the active filter.
+
+### Filters
+
+The project catalogue can be filtered by category. The filter interface updates
+the grid, list and visible project count without reloading the page.
+
+### Project details
+
+Selecting a project opens a detailed panel above the main page. The detail view
+includes:
+
+- persistent project navigation;
+- project title, category and year;
+- responsive image gallery;
+- project statements;
+- an expandable About section;
+- navigation to a random related project;
+- close controls and Escape-key support.
+
+The page behind the detail view is covered by a translucent blurred backdrop.
+The main page remains protected while the detail view is active.
+
+### Responsive About view
+
+On desktop, the About section expands beside the project content. On mobile,
+the About section becomes the main visible view, occupying the available page
+area while the project images remain hidden. Its content can be scrolled
+independently and the button remains at the bottom of the About content.
+
+The button changes between:
+
+- `About Project +`
+- `Close About ×`
+
+A bottom fade provides a visual indication that additional content can be
+scrolled.
+
+### Header and footer components
+
+The header and footer are generated as reusable components. The mobile header
+uses a burger menu, while the footer includes contact information and the
+current local time for Coimbra.
+
+### Motion and interaction
+
+The website includes CSS transitions and JavaScript interactions for:
+
+- the introductory section;
+- project cards;
+- filters;
+- the custom cursor;
+- opening and closing project details;
+- expanding and closing About;
+- project changes;
+- the mobile navigation menu.
+
+Reduced-motion preferences are respected through
+`prefers-reduced-motion` rules.
+
+## API and generated content
+
+The website does not require a backend or API keys.
+
+### Project names
+
+[`api/names.js`](./api/names.js) requests random words from a public API and
+combines them into project names. If the service is unavailable, local fallback
+names are used.
+
+### About text
+
+[`api/about-api.js`](./api/about-api.js) requests paragraphs from the free
+Bacon Ipsum API. The returned paragraphs are grouped into projects, with a
+maximum of four paragraphs per project.
+
+If the API fails or returns invalid data, the website logs the error and uses
+local fallback text so that the project catalogue can still be displayed.
+
+### Project images
+
+[`api/images.js`](./api/images.js) creates the current project image collection
+locally as SVG-based content. This keeps the project lightweight and avoids
+requiring image hosting for the assignment version.
+
+## Project structure
+
+```text
 DW_portfolio/
 ├── index.html
 ├── README.md
 ├── api/
+│   ├── about-api.js
 │   ├── api.js
+│   ├── create-project.js
+│   ├── format-project-word.js
+│   ├── get-random-index.js
 │   ├── images.js
-│   └── names.js
-├── fonts/
-│   └── satoshi/
-│       └── Satoshi-*.woff2
+│   ├── names.js
+│   ├── project-settings.js
+│   └── shuffle-items.js
 ├── css/
 │   ├── animations.css
+│   ├── cursor.css
 │   ├── global.css
 │   ├── intro_anim.css
-│   ├── projects.css
+│   ├── project-details.css
 │   ├── projects-filter.css
 │   ├── projects-grid.css
 │   ├── projects-list.css
+│   ├── projects.css
 │   ├── variables.css
 │   └── header_footer/
 │       ├── footer.css
 │       └── header.css
+├── fonts/
+│   └── satoshi/
+│       └── *.woff2
 └── js/
     ├── add_projects.js
+    ├── custom_cursor.js
     ├── filter.js
     ├── footer.js
     ├── head.js
     ├── header.js
-    └── js_import.js
+    ├── js_import.js
+    ├── cursor/
+    ├── filters/
+    ├── layout/
+    ├── project-details/
+    └── projects/
+```
 
-## How it works
+## Code organisation
 
-### HTML entry point
+### HTML
 
-[`index.html`](./index.html) is the main page and defines the basic content structure:
+[`index.html`](./index.html) contains the page shell, hero section, project
+catalogue targets and the project-detail template.
 
-- The hero introduction.
-- The showcase grid.
-- The projects section.
-- Placeholder elements for the header and footer.
-
-The header and footer are not written directly into the page. Instead, the HTML contains component targets:
+Header and footer markup are inserted into the elements marked with:
 
 ```html
 <div data-component="header"></div>
 <div data-component="footer"></div>
 ```
 
-This keeps the page clean and allows the same components to be reused on other pages later, if needed.
+### CSS
 
-### Centralised CSS loading
+Shared design tokens and font declarations are defined in
+[`css/variables.css`](./css/variables.css).
 
-[`js/head.js`] is responsible for adding the project's stylesheets to the document head. This creates one central place where global styles can be registered.
+The main style responsibilities are split between:
 
-The currently prepared stylesheets are:
+- [`css/global.css`](./css/global.css) — global rules and hero typography;
+- [`css/header_footer/header.css`](./css/header_footer/header.css) — header and
+  mobile menu;
+- [`css/header_footer/footer.css`](./css/header_footer/footer.css) — footer;
+- [`css/projects.css`](./css/projects.css) — project section styles;
+- [`css/projects-grid.css`](./css/projects-grid.css) — project grid and cards;
+- [`css/projects-list.css`](./css/projects-list.css) — project list;
+- [`css/projects-filter.css`](./css/projects-filter.css) — filter controls;
+- [`css/project-details.css`](./css/project-details.css) — detail panel,
+  backdrop, About layout and responsive detail behaviour;
+- [`css/animations.css`](./css/animations.css) and
+  [`css/intro_anim.css`](./css/intro_anim.css) — reusable and introductory
+  animations.
 
-- `variables.css` — shared colour and typography variables, the Basteleur import and the local Satoshi font-face declarations.
-- `global.css` — global box sizing, base typography and heading rules connected to the shared font variables.
-- `animations.css` — reusable animations and transitions.
-- `intro_anim.css` — animations for the introduction or hero area.
-- `header.css` — styles specific to the header.
-- `footer.css` — styles specific to the footer.
-- `projects.css` — shared project section, header and responsive motion rules.
-- `projects-filter.css` — project filter controls and options.
-- `projects-list.css` — project year groups and list buttons.
-- `projects-grid.css` — project image grid and cards.
+### JavaScript
 
-Stylesheets are loaded in order by `head.js`, with `variables.css` loaded first so that the remaining files can use the shared design tokens.
+[`js/js_import.js`](./js/js_import.js) is the main JavaScript entry point. It:
 
-### Typography
+1. renders the header and footer;
+2. starts the custom cursor;
+3. fetches the project data;
+4. renders the project grid and list;
+5. initialises the filters;
+6. initialises project details.
 
-The visual system uses two font families:
+The JavaScript is written with native ES modules. No framework, bundler or
+third-party JavaScript library is required.
 
-- **Basteleur Bold** for headings and display typography. It is imported in `css/variables.css` from the provided webfont URL.
-- **Satoshi** for body text and interface elements. Its variable normal and italic font files are stored locally in `fonts/satoshi/`.
+## Typography
 
-The main variables are:
+The visual system uses two font variables:
 
 ```css
 --font-display: "Basteleur Bold", Georgia, serif;
 --font-body: "Satoshi", Arial, sans-serif;
 ```
 
-Use these variables instead of hard-coding font names in component styles.
+Satoshi is stored locally in the repository. Basteleur is currently loaded
+through the font URL defined in [`css/variables.css`](./css/variables.css).
 
-### Centralised JavaScript imports
+The hero introduction uses Basteleur for the opening statement and final call
+to action, while the explanatory text uses Satoshi.
 
-[`js/js_import.js`] is the main JavaScript entry point. It imports the project's modules in one organised location:
+## Accessibility considerations
 
-- [`header.js`] renders the header.
-- [`footer.js`] renders the footer.
-- [`filter.js`] is reserved for project filtering behaviour.
-- [`add_projects.js`] is reserved for adding or generating projects.
-- [`api.js`] combines the local image and name modules into a JSON-shaped collection of 14 random projects. Each project has one cover, 3–8 additional images, a random year and a random tag.
-- [`images.js`] is a local JavaScript image module that generates random SVG images without external requests.
-- [`names.js`] is a local JavaScript name module that provides project names without external requests.
+The project includes several accessibility features:
 
-The entry point is loaded as an ES module:
+- semantic HTML landmarks;
+- keyboard support for project cards;
+- buttons for interactive actions;
+- `aria-expanded` and `aria-controls` on expandable controls;
+- descriptive image `alt` text;
+- Escape-key support for closing project details;
+- reduced-motion support;
+- focus placed on the close button when a detail view opens.
 
-```html
-<script type="module" src="js/js_import.js"></script>
-```
+The next accessibility improvements would be adding a complete focus trap for
+the detail view and returning focus to the original project card after closing.
 
-### Header and footer components
+## Run locally
 
-[`header.js`] exports `renderHeader()`. It finds the element marked with `data-component="header"` and replaces it with the complete site header.
+This project has no package manager, dependencies or build step.
 
-[`footer.js`] follows the same pattern with `renderFooter()`. This makes both components independent from the page markup and easier to update globally.
+Because it uses JavaScript modules, open it through a local HTTP server instead
+of using a `file://` URL.
 
-The footer currently contains the contact section, email, phone, location, portfolio bio and a live local time display for Coimbra. The contact navigation points to the footer through the `#contacts` anchor.
-
-For example, changing the navigation in `header.js` or the contact details in `footer.js` updates every page that uses the component.
-
-## Running the project locally
-
-This is a front-end project with no package manager or build step currently required.
-
-Because the project uses JavaScript modules, it should be opened through a local web server rather than directly with a `file://` URL.
-
-One simple option is:
+With Python installed:
 
 ```bash
 python3 -m http.server 8000
@@ -149,76 +271,56 @@ Then open:
 http://localhost:8000
 ```
 
-Alternatively, use the **Live Server** extension in VS Code.
+Alternatively, use the Live Server extension in VS Code.
 
-## Development workflow
+## Deploy to GitHub Pages
 
-### Adding or changing styles
+The website can be deployed as a static site through GitHub Pages:
 
-1. Put shared colours and typography values in `css/variables.css`.
-2. Put general page rules in `css/global.css`.
-3. Keep header and footer rules in `css/header_footer/`.
-4. Keep project section rules in `css/projects.css`, filter rules in `css/projects-filter.css`, list rules in `css/projects-list.css`, and grid/card rules in `css/projects-grid.css`.
-5. Add animation rules to `animations.css` or `intro_anim.css`, depending on their scope.
+1. Push the repository to GitHub.
+2. Open the repository settings.
+3. Go to **Pages**.
+4. Select the `main` branch and the repository root as the source.
+5. Save the configuration.
+6. Open the generated GitHub Pages URL.
 
-If a new stylesheet is created, add its path to the `stylesheets` array in [`js/head.js`](./js/head.js).
+After deployment, verify that:
 
-When adding typography, use `var(--font-body)` for interface and body text or `var(--font-display)` for headings and display text. Keep local font files inside `fonts/` and add a corresponding `@font-face` declaration to `css/variables.css`.
+- the main page loads correctly;
+- JavaScript modules are not blocked;
+- the public APIs respond correctly;
+- fallback content appears if an API is unavailable;
+- all responsive states work on a real mobile device.
 
-### Updating the header or footer
+## Assignment submission checklist
 
-Edit the template in [`header.js`](./js/header.js) or [`footer.js`](./js/footer.js). Do not duplicate the component markup in `index.html`.
+The final submission should include:
 
-The corresponding CSS should remain in:
+- the GitHub repository link;
+- the published GitHub Pages link;
+- a video named `SEEME` in the repository root;
+- a maximum video duration of one minute.
 
-- `css/header_footer/header.css`
-- `css/header_footer/footer.css`
+The video should briefly demonstrate the main interaction flow: browsing the
+project catalogue, filtering projects, opening a project, using the About view
+and navigating to another project.
 
-### Adding project content
+## Academic context
 
-Project content is fetched by `api.js` and rendered by `add_projects.js`. The filter module then uses the shared project data to keep the grid and list synchronized.
+This project was developed for **Assignment 2 — Static Website** in the
+**Web Development 2026** course of the **MDM — University of Coimbra**.
 
-When that work is implemented, project data should be kept separate from presentation logic wherever possible.
+It demonstrates:
 
-The project image grid and the project list are both rendered by [`add_projects.js`](./js/add_projects.js) from the same projects returned by [`api.js`](./api/api.js). Each project JSON object has a `cover` object, an `images` array, a name, tag and year. The API limits the collection to 14 projects, and the CSS places a maximum of three slots per row on desktop.
+- a static website structure;
+- responsive design;
+- dynamic interaction;
+- CSS animation;
+- content fetched from public APIs;
+- native HTML, CSS and JavaScript without third-party libraries.
 
-The projects header includes a responsive filter control. Opening `All projects` reveals one option for each category currently present in the project data. Selecting a category updates both the grid and the list, while the `No. Projetos` value is calculated from the visible projects.
+## License and content
 
-## Design and technical goals
-
-The project is intended to become:
-
-- **Modular:** shared components should be defined once and reused.
-- **Maintainable:** each CSS and JavaScript file should have a clear responsibility.
-- **Responsive:** the experience should work across desktop, tablet and mobile screens.
-- **Expressive:** animation and typography should support the work without distracting from it.
-- **Scalable:** new projects and future pages should be easy to add.
-- **Accessible:** semantic HTML, readable contrast, keyboard navigation and meaningful links should be preserved.
-- **Performant:** unnecessary dependencies and duplicated code should be avoided.
-
-## Planned improvements
-
-Possible next steps include:
-
-- Replace placeholder project entries with real project data.
-- Implement project filtering by category and year.
-- Connect the project list to a local data source or API.
-- Open project details in a bottom sheet that expands to the sticky header on scroll.
-- Complete the responsive layout.
-- Add the visual system and shared CSS variables.
-- Implement the planned intro, page and hover animations.
-- Add accessible navigation and interaction states.
-- Add project images, metadata and external links.
-- Add deployment configuration for a static hosting service.
-
-## Content notes
-
-The repository currently contains early placeholder content, including repeated project names and an example project count. These values should be updated as the portfolio content is finalised.
-
-> **Academic implementation note:** Temporarily, and for academic purposes, this portfolio will display images retrieved from an API. This approach is being used to fulfil **Assignment 2** for the Web Development course and to demonstrate the integration of external data into the website. The API-based images are therefore part of the current assignment implementation and may be replaced by final portfolio assets later.
-
-The portfolio text is written primarily in English, while some project metadata is currently in Portuguese. This can be standardised later according to the final audience and communication strategy.
-
-## License
-
-No licence has been defined yet. Until one is added, the project should be treated as private portfolio material and should not be reused, redistributed or commercially republished without permission.
+No licence has been defined for this repository. Until one is added, the
+portfolio should be treated as personal academic work and should not be
+redistributed or commercially reused without permission.
