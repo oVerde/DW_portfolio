@@ -6,7 +6,6 @@ export function createHeaderMarkup() {
             <nav class="nav" aria-label="Main navigation">
                 <ul class="nav-main">
                     <li><a href="index.html">work</a></li>
-                    <li><a href="#curriculum">curriculum</a></li>
                 </ul>
                 <a class="nav-contact" href="#contacts">contact</a>
             </nav>
