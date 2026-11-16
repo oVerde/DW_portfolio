@@ -120,15 +120,19 @@ local fallback text so that the project catalogue can still be displayed.
 
 ### Project images
 
-[`api/images.js`](./api/images.js) creates the current project image collection
-locally as SVG-based content. This keeps the project lightweight and avoids
-requiring image hosting for the assignment version.
+[`api/images.js`](./api/images.js) builds the project image collection from ten
+external Unsplash image URLs. The URLs are reused to generate the required
+collection size and the resulting images are shuffled before being assigned to
+projects. This keeps the project lightweight and avoids storing image files in
+the repository.
 
 ## Project structure
 
 ```text
 DW_portfolio/
+├── CNAME
 ├── index.html
+├── test.html
 ├── README.md
 ├── api/
 │   ├── about-api.js
@@ -165,6 +169,8 @@ DW_portfolio/
     ├── head.js
     ├── header.js
     ├── js_import.js
+    ├── load-stylesheets.js
+    ├── project_details.js
     ├── cursor/
     ├── filters/
     ├── layout/
@@ -288,8 +294,8 @@ After deployment, verify that:
 
 - the main page loads correctly;
 - JavaScript modules are not blocked;
-- the public APIs respond correctly;
-- fallback content appears if an API is unavailable;
+- the external services respond correctly;
+- fallback content appears if a content service is unavailable;
 - all responsive states work on a real mobile device.
 
 ## Assignment submission checklist
